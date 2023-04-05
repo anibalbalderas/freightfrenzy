@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, render_template
 
 app = Flask(__name__)
@@ -33,5 +35,8 @@ def getademo():
     return render_template('front/get-a-demo.html')
 
 
+# obtener puerto #
+port = int(os.environ.get('PORT', 8080))
+# iniciar servidor #
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='localhost', port=port)
