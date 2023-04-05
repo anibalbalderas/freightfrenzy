@@ -5,32 +5,32 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 def index():
     return render_template('front/index.html')
 
 
-@app.route('/for-carriers')
+@app.route('/for-carriers', methods=['GET'])
 def forcarriers():
     return render_template('front/for-carriers.html')
 
 
-@app.route('/for-brokers')
+@app.route('/for-brokers', methods=['GET'])
 def forbrokers():
     return render_template('front/for-brokers.html')
 
 
-@app.route('/company')
+@app.route('/company', methods=['GET'])
 def company():
     return render_template('front/company.html')
 
 
-@app.route('/partners')
+@app.route('/partners', methods=['GET'])
 def partners():
     return render_template('front/partners.html')
 
 
-@app.route('/get-a-demo')
+@app.route('/get-a-demo', methods=['GET'])
 def getademo():
     return render_template('front/get-a-demo.html')
 
