@@ -1310,6 +1310,15 @@ nav ul li:last-child a{
     color: white;
 }
 @media screen and (max-width: 768px){
+    .contact__content{
+        width: 90%;
+    }
+    .contact__grid{
+        gap: 10px;
+    }
+    .demo{
+        width: 90%;
+    }
     .command__s6{
         width: 90%;
     }
@@ -1417,6 +1426,9 @@ nav ul li:last-child a{
     }
 }
 @media screen and (max-width: 480px){
+    .contact__grid{
+        grid-template-columns: 1fr;
+    }
     .company{
         width: 90%;
         height: auto;

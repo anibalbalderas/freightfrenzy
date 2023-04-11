@@ -89,14 +89,18 @@ form2 = document.getElementsByClassName('contactD2')
 boton1 = document.getElementById('demo1')
 boton2 = document.getElementById('demo2')
 
-boton1.addEventListener('click', function(){
-    form1[0].classList.toggle('contactD-active')
-    boton1.classList.add('contactD')
-    boton2.classList.add('contactD2')
-})
+if (boton1) {
+    boton1.addEventListener('click', function(){
+        form1[0].classList.toggle('contactD-active')
+        boton1.classList.add('contactD')
+        boton2.classList.add('contactD2')
+    })
+}
 
-boton2.addEventListener('click', function(){
-    form2[0].classList.toggle('contactD2-active')
-    boton2.classList.add('contactD2')
-    boton1.classList.add('contactD')
-})
+if (boton2) {
+    boton2.addEventListener('click', function(){
+        form2[0].classList.toggle('contactD2-active')
+        boton2.classList.add('contactD2')
+        boton1.classList.add('contactD')
+    })
+}

@@ -11,5 +11,3 @@ MarkupSafe==2.1.1
 zipp==3.6.0
 flask_mysqldb
 stripe~=5.3.0
-flask_wtf
-wtforms
