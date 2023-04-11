@@ -1180,6 +1180,135 @@ nav ul li:last-child a{
     background-color: #0a8dd1;
     opacity: 0.8;
 }
+.company{
+    padding-top: 20px;
+    width: 80%;
+    margin: 0 auto;
+    height: 85vh;
+}
+.company h1{
+    font-size: 38px;
+    font-weight: bold;
+    color: #3f3f3f;
+    margin-top: 20px;
+}
+.company p{
+    font-size: 20px;
+    color: #606060;
+    margin-bottom: 20px;
+}
+.company__content{
+    width: 80%;
+    margin: 0 auto;
+}
+.company__content h2{
+    font-size: 25px;
+    font-weight: 500;
+    color: #0a8dd1;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+.company__content p{
+    font-size: 17px;
+    color: #606060;
+    margin-bottom: 20px;
+}
+.company__content span{
+    font-size: 17px;
+    color: #0a8dd1;
+    font-weight: 500;
+}
+.company__grid{
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    gap: 50px;
+    margin-top: 50px;
+    justify-content: center;
+}
+.company__grid h3{
+    font-size: 16px;
+    font-weight: 400;
+    color: #0a8dd1;
+    margin-bottom: 20px;
+}
+.demo{
+    padding: 20px 0 80px 0;
+    width: 60%;
+    margin: 0 auto;
+    min-height: 85vh;
+}
+.demotext h1{
+    font-size: 38px;
+    font-weight: bold;
+    color: #3f3f3f;
+    margin-top: 20px;
+}
+.demotext p{
+    font-size: 20px;
+    color: #606060;
+    margin-bottom: 20px;
+}
+.demotext span{
+    font-size: 16px;
+    color: #0a8dd1;
+    font-weight: 500;
+}
+.botones{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+.contactD, .contactD2{
+    display: none;
+}
+.contactD-active, .contactD2-active{
+    display: block;
+}
+.contactD h2, .contactD2 h2{
+    font-size: 30px;
+    font-weight: 500;
+    color: #3d3d3d;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    text-align: center;
+}
+.contactD label, .contactD2 label{
+    font-size: 14px;
+    color: #606060;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+.contactD form, .contactD2 form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+}
+.contactD form input, .contactD2 form input{
+    width: 100%;
+    height: 40px;
+    border: 1px solid #dadce1;
+    border-radius: 8px;
+    padding: 0 10px;
+    margin-bottom: 10px;
+}
+.contactD form button, .contactD2 form button{
+    width: 100px;
+    height: 40px;
+    border: 0;
+    border-radius: 8px;
+    background-color: #0a8dd1;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+.contactD form button:hover, .contactD2 form button:hover{
+    background-color: #0a8dd1;
+    opacity: 0.8;
+    color: white;
+}
 @media screen and (max-width: 768px){
     .command__s6{
         width: 90%;
@@ -1288,6 +1417,10 @@ nav ul li:last-child a{
     }
 }
 @media screen and (max-width: 480px){
+    .company{
+        width: 90%;
+        height: auto;
+    }
     .command__s6g{
         grid-template-columns: 1fr;
     }

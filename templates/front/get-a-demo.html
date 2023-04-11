@@ -1,5 +1,51 @@
 {% extends 'front/base/base.html' %}
 
 {% block content %}
-
+    <div class="demo">
+        <div class="demotext">
+            <h1>Get a Demo</h1>
+            <p>Fill out the form below to get a demo of our platform.</p>
+            <span>Select one</span>
+        </div>
+        <div class="botones">
+            <p class="section3__btn" id="demo1">Fleet Owner or Manager</p>
+            <p class="section3__btn" id="demo2">Freight Broker</p>
+        </div>
+        <div class="contactD">
+            <h2>Fleet Owner or Manager</h2>
+            <form action="{{ url_for("getademo")}}" method="post" id="contact-form">
+                <label for="name">First Name</label>
+                <input type="text" name="name" id="name" placeholder="First Name" required>
+                <label for="last-name">Last Name</label>
+                <input type="text" name="lastName" id="last-name" placeholder="Last Name" required>
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" placeholder="Email" required>
+                <label for="phone">Phone</label>
+                <input type="tel" name="phone" id="phone" placeholder="Phone" required>
+                <label for="company">Company</label>
+                <input type="text" name="company" id="company" placeholder="Company" required>
+                <label for="trucks">Number of Trucks</label>
+                <input type="number" name="truckNumber" id="trucks" placeholder="Number of Trucks" required>
+                <button type="submit" class="btn">Submit</button>
+            </form>
+        </div>
+    <div class="contactD2">
+        <h2>Freight Broker</h2>
+            <form action="{{ url_for("getademo2")}}" method="post" id="contact-form">
+                <label for="name">First Name</label>
+                <input type="text" name="name" id="name" placeholder="First Name" required>
+                <label for="last-name">Last Name</label>
+                <input type="text" name="lastName" id="last-name" placeholder="Last Name" required>
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" placeholder="Email" required>
+                <label for="phone">Phone</label>
+                <input type="tel" name="phone" id="phone" placeholder="Phone" required>
+                <label for="mcNumber">MC Number</label>
+                <input type="text" name="mcNumber" id="mcNumber" placeholder="MC Number" required>
+                <label for="loadsNumber">Number of Loads Posted Per Day</label>
+                <input type="number" name="loadsNumber" id="loadsNumber" placeholder="Number of Loads Posted Per Day" required>
+                <button type="submit" class="btn">Submit</button>
+            </form>
+        </div>
+    </div>
 {% endblock %}

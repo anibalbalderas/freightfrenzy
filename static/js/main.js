@@ -1,6 +1,6 @@
 $(document).ready(function() {
   // Manejar eventos de clic en enlaces y botones
-  $('a, button').click(function(event) {
+  $('a, button').not('#contact-form button').click(function(event) {
     // Evitar que se siga el enlace o se envíe el formulario
     event.preventDefault();
     // Obtener la URL del recurso correspondiente
@@ -82,19 +82,21 @@ $(document).ready(function() {
   });
 });
 
-// contact form //
-$(document).ready(function() {
-    $('.contactForm').submit(function (event) {
-        event.preventDefault();
-        var form = $(this);
-        var url = form.attr('action');
-        $.ajax({
-            type: 'POST',
-            url: url,
-            data: form.serialize(),
-            success: function (data) {
-                $('#contactForm').html(data);
-            }
-        });
-    });
-});
+// mostrar form si se da click en el boton //
+form1 = document.getElementsByClassName('contactD')
+form2 = document.getElementsByClassName('contactD2')
+
+boton1 = document.getElementById('demo1')
+boton2 = document.getElementById('demo2')
+
+boton1.addEventListener('click', function(){
+    form1[0].classList.toggle('contactD-active')
+    boton1.classList.add('contactD')
+    boton2.classList.add('contactD2')
+})
+
+boton2.addEventListener('click', function(){
+    form2[0].classList.toggle('contactD2-active')
+    boton2.classList.add('contactD2')
+    boton1.classList.add('contactD')
+})
