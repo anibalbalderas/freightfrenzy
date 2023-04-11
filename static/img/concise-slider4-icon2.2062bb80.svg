@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>POI / List / Truck Stops / ic_list_truckstop@3x</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Command-Web-轮播图-V2.2" transform="translate(-5237.000000, -685.000000)">
+            <g id="编组-35" transform="translate(4816.000000, 213.000000)">
+                <g id="编组-31" transform="translate(235.000000, 338.000000)">
+                    <g id="编组" transform="translate(186.000000, 134.000000)">
+                        <circle id="椭圆形" fill="#FFFFFF" cx="12" cy="12" r="12"></circle>
+                        <g id="ic_list_ta" fill-rule="nonzero">
+                            <g id="ic_list_ta">
+                                <path d="M12,2 C17.5228475,2 22,6.4771525 22,12 C22,17.5228475 17.5228475,22 12,22 C6.4771525,22 2,17.5228475 2,12 C2,6.4771525 6.4771525,2 12,2 L12,2 Z M12,-4.4408921e-16 C5.372583,2.53735213e-15 -2.13153988e-15,5.372583 0,12 C2.13153988e-15,18.627417 5.372583,24 12,24 C18.627417,24 24,18.627417 24,12 C24,8.81740212 22.7357179,5.76515517 20.4852814,3.51471863 C18.2348448,1.26428208 15.1825979,1.94877915e-16 12,-1.97215226e-31 L12,-4.4408921e-16 Z" id="stroke" fill="#ED593B"></path>
+                                <g id="ic_list_ta-2" transform="translate(10.000000, 6.000000)" fill="#ED593B">
+                                    <path d="M4,4.1 L2.48,4.1 L0,11 L3,11 L3.56,9.23 L5.89,9.23 L6.36,11 L9.36,11 L5.6,0 L4,4.1 Z M4.65,5.16 L5.65,7.93 L3.57,7.93 L4.65,5.16 Z" id="Fill-2"></path>
+                                </g>
+                                <g id="ic_list_ta-3" transform="translate(5.000000, 6.000000)" fill="#007FBA">
+                                    <polygon id="Fill-1" points="1.42 0.04 0.5 3.1 2.94 3.1 0.7 10.99 3.68 10.99 6.26 3.1 8.22 3.1 9.59 0.04"></polygon>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -111,8 +111,8 @@
                 <p>Everything you need for the job goes<br>straight to your Trucker Path app. We<br>handle the office work!</p>
             </div>
         </div>
-        <p class="section3__btn">View More</p>
-        <p class="section3__btn">Get Started</p>
+        <a class="section3__btn" href="{{ url_for('dispatch') }}">View More</a>
+        <a class="section3__btn" href="{{ url_for('dispatch') }}">Get Started</a>
     </div>
     <div class="section4">
         <div class="section4__cont">
@@ -122,12 +122,12 @@
                 <div>
                     <h3>See it in Action</h3>
                     <p>Schedule a meeting with our team to see<br>our full suite of features designed to take<br>your trucking fleet to the next level.<br>Industry-leading software now made<br>available for fleets of all sizes!</p>
-                    <p class="section3__btn">See it in action</p>
+                    <a class="section3__btn" href="{{ url_for('command') }}">See it in action</a>
                 </div>
                 <div>
                     <h3>Start Your Free Trial Now</h3>
                     <p>Create an account and login to your own fleet<br>management system in 30 seconds. Equip your<br>trucking fleet with the best-in-class tools to<br>deliver freight more efficiently.<br><br></p>
-                    <p class="section3__btn">Start Free Trial</p>
+                    <a class="section3__btn" href="{{ url_for('command') }}">Start Free Trial</a>
                 </div>
             </div>
         </div>
@@ -139,12 +139,12 @@
             <div class="section5__c1" data-image="/static/img/Frame191759.png">
                 <h3>For Carriers</h3>
                 <p>We aggregate loads from brokers, 3PLs,<br>shippers, so you have access to all the freight<br>available at your fingertips</p>
-                <p class="section3__btn">Find Loads</p>
+                <a class="section3__btn" href="{{ url_for('getademo') }}">Find Loads</a>
             </div>
             <div class="section5__c2" data-image="/static/img/tl-web-brokers@2x.png">
                 <h3>For Brokers</h3>
                 <p>The best way to reach qualified carriers and<br>get your freight<br>covered efficiently and reliably</p>
-                <p class="section3__btn">Post Loads</p>
+                <a class="section3__btn" href="{{ url_for('getademo') }}">Post Loads</a>
             </div>
         </div>
         <div class="section5__img">

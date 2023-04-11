@@ -1,0 +1,112 @@
+{% extends 'front/base/base.html' %}
+
+{% block content %}
+    <div class="dispatch__banner">
+        <div class="dispatch__bt">
+            <img src="/static/img/logo.svg" alt="Dispatch Banner">
+            <h2>More money. Fewer hassles.</h2>
+            <p>We do the back-office work. You handle the driving.</p>
+            <a class="section3__btn" href="{{ url_for('getademo') }}">Let's Go!</a>
+        </div>
+    </div>
+    <div class="dispatch__s1">
+        <p>Nearly a million drivers depend on the Trucker Path app for help on the road. Now,<br>our expert personal Dispatchers are here for Dry Van, Flatbed, Conastoga, Step<br>Deck and Reefer drivers to make your job easier and make you more money!</p>
+    </div>
+    <div class="dispatch__s2">
+        <h2>How Does It Work?</h2>
+        <div class="dispatch__s2g1">
+            <div class="dispatch__s2g1-c">
+                <img src="/static/img/img-1@2x.png" alt="">
+                <div class="dispatch__s2g1-ct">
+                    <h3>Getting Acquainted</h3>
+                    <span>Share preferences with your Dispatcher</span>
+                    <p>It’s our job to make your job as profitable and hassle-free as possible. That begins with no forced dispatch and you telling your personal Dispatcher the types of jobs and work schedules you like…and don’t like!</p>
+                </div>
+            </div>
+        </div>
+        <div class="dispatch__s2g2">
+            <div class="dispatch__s2g1-c">
+                <div class="dispatch__s2g1-ct">
+                    <h3>Load Sourcing & Negotiation</h3>
+                    <span>Getting you extra revenue per mile.</span>
+                    <p>Armed with your preferences, powerful Artificial Intelligence (AI) and the millions of datapoints we collect from our many platforms, your Dispatcher finds you the dry van and reefer loads you want at rates you really want.</p>
+                </div>
+                <img src="/static/img/img-2@2x.png" alt="">
+            </div>
+        </div>
+        <div class="dispatch__s2g1">
+            <div class="dispatch__s2g1-c">
+                <img src="/static/img/img-3@2x.png" alt="">
+                <div class="dispatch__s2g1-ct">
+                    <h3>Real Truck Navigation</h3>
+                    <span>Enjoy the quickest, safest routes</span>
+                    <p>Your personal Dispatcher next sends all the info you need for the job directly to your Trucker Path app including pickup/dropoff locations, timing windows and any special instructions. Our best-in-class navigation engine routes you for the quickest and safest path.</p>
+                </div>
+            </div>
+        </div>
+        <div class="dispatch__s2g2">
+            <div class="dispatch__s2g1-c">
+                <div class="dispatch__s2g1-ct">
+                    <h3>Real-Time Status Reporting</h3>
+                    <span>No more “Where are you” calls</span>
+                    <p>Where are you? What’s your ETA? These check calls and questions from customers take time and energy. Your Dispatcher and our real-time reporting data combine to keep everyone informed and up to speed, easily and without interruptions.</p>
+                </div>
+                <img src="/static/img/img-4@2x.png" alt="">
+            </div>
+        </div>
+        <div class="dispatch__s2g1">
+            <div class="dispatch__s2g1-c">
+                <img src="/static/img/img-5@2x.png" alt="">
+                <div class="dispatch__s2g1-ct">
+                    <h3>Compliance Monitoring</h3>
+                    <span>Make the most of your available hours-of-service</span>
+                    <p>While you’re doing what you’re supposed to be doing, driving, your personal Dispatcher will be monitoring your available hours. They’ll be looking ahead for a good place for you to shutdown for the day or for your next loads. It’s our responsibility to keep the wheels turnin’ so you keep earning.</p>
+                </div>
+            </div>
+        </div>
+        <div class="dispatch__s2g2">
+            <div class="dispatch__s2g1-c">
+                <div class="dispatch__s2g1-ct">
+                    <h3>Shut Down for the Day with Confidence & Ease</h3>
+                    <span>Save time & drive more miles</span>
+                    <p>Trucker Path offers well over 300,000 POIs and parking locations with up-to-date detailed information from our community of more than a million truckers. Your Dispatcher will look ahead for you, helping to find a great place to park and rest after a long shift.</p>
+                </div>
+                <img src="/static/img/img-6@2x.png" alt="">
+            </div>
+        </div>
+        <div class="dispatch__s2g1">
+            <div class="dispatch__s2g1-c">
+                <img src="/static/img/img-7@2x.png" alt="">
+                <div class="dispatch__s2g1-ct">
+                    <h3>Digital Paperwork</h3>
+                    <span>To get you paid faster</span>
+                    <p>Submitting your paperwork is a huge part of getting paid. You’ll be able to easily scan your docs and submit them to your Dispatcher instantly using Trucker Path. After all, the faster you submit your paperwork, the faster you’ll get paid!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="dispatch__s3">
+        <h2>Getting started is easy</h2>
+        <div class="dispatch__s3g">
+            <div class="dispatch__s3gc">
+                <img src="/static/img/icon1@2x.png" alt="">
+                <h3>Send Your Packet</h3>
+                <p>DOT Authority, Certificate of Insurance, W-9, etc.</p>
+            </div>
+            <div class="dispatch__s3gc">
+                <img src="/static/img/icon2@2x.png" alt="">
+                <h3>Sign Agreement</h3>
+                <p>Sign a quick and easy dispatch service level agreement</p>
+            </div>
+            <div class="dispatch__s3gc">
+                <img src="/static/img/icon3@2x.png" alt="">
+                <h3>Hit the road</h3>
+                <p>We start dispatching your truck immediately</p>
+            </div>
+        </div>
+        <div class="dispatch__s3btn">
+            <a class="section3__btn" href="{{ url_for('getademo') }}">Contact Me</a>
+            <a class="section3__btn2" href="{{ url_for('getademo') }}">Sign Me Up</a>
+        </div>
+    </div>
+{% endblock %}

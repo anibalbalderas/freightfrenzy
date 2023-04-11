@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>POI / List / WRFM / ic_list_washes@3x</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Command-Web-轮播图-V2.2" transform="translate(-5051.000000, -772.000000)">
+            <g id="编组-35" transform="translate(4816.000000, 213.000000)">
+                <g id="编组-31" transform="translate(235.000000, 338.000000)">
+                    <g id="编组" transform="translate(0.000000, 221.000000)">
+                        <circle id="椭圆形" fill="#FFFFFF" cx="12" cy="12" r="12"></circle>
+                        <g id="ic_list_washes">
+                            <path d="M12,24 C18.627417,24 24,18.627417 24,12 C24,5.372583 18.627417,0 12,0 C5.372583,0 0,5.372583 0,12 C0,18.627417 5.372583,24 12,24 Z M12,22 C6.4771525,22 2,17.5228475 2,12 C2,6.4771525 6.4771525,2 12,2 C17.5228475,2 22,6.4771525 22,12 C22,17.5228475 17.5228475,22 12,22 Z" id="Oval-58" fill="#0277AD" fill-rule="nonzero"></path>
+                            <path d="M7,9.97777778 C7,13.7111111 12,18.3333333 12,18.3333333 C12,18.3333333 17,13.7111111 17,9.97777778 C17,7.22577778 14.7642857,5 12,5 C9.23571429,5 7,7.22577778 7,9.97777778 Z" id="Shape" fill="#0277AD" transform="translate(12.000000, 11.666667) scale(1, -1) translate(-12.000000, -11.666667) "></path>
+                            <path d="M9.67092015,11 C9.67092015,11 7.63328291,14.1914062 10.6600773,15.961853" id="Path-1259" stroke="#FFFFFF"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

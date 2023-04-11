@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>POI / List / Truck Stops / ic_list_truckstop@3x</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Command-Web-轮播图-V2.2" transform="translate(-5051.000000, -685.000000)">
+            <g id="编组-35" transform="translate(4816.000000, 213.000000)">
+                <g id="编组-31" transform="translate(235.000000, 338.000000)">
+                    <g id="编组" transform="translate(0.000000, 134.000000)">
+                        <g id="ic_list_ws" transform="translate(12.000000, 12.000000) scale(-1, 1) translate(-12.000000, -12.000000) ">
+                            <circle id="椭圆形" fill="#FFFFFF" cx="12" cy="12" r="12"></circle>
+                            <path d="M12,24 C18.627417,24 24,18.627417 24,12 C24,5.372583 18.627417,0 12,0 C5.372583,0 0,5.372583 0,12 C0,18.627417 5.372583,24 12,24 Z M12,22 C6.4771525,22 2,17.5228475 2,12 C2,6.4771525 6.4771525,2 12,2 C17.5228475,2 22,6.4771525 22,12 C22,17.5228475 17.5228475,22 12,22 Z" id="Oval-58" fill="#02AD8E" fill-rule="nonzero"></path>
+                            <polygon id="W" fill="#02AD8E" fill-rule="nonzero" points="11.8837891 11.3408203 10.2226562 17.5 7.85742188 17.5 5.28027344 7.63574219 7.87109375 7.63574219 9.20410156 14.3007812 9.25878906 14.3007812 10.90625 7.63574219 12.9160156 7.63574219 14.5634766 14.3007812 14.6181641 14.3007812 15.9511719 7.63574219 18.5419922 7.63574219 15.9648438 17.5 13.5996094 17.5 11.9384766 11.3408203"></polygon>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

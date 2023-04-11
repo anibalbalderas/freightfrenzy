@@ -29,6 +29,17 @@ $(document).ready(function() {
     });
 });
 
+// cambiar imagen si se da click en el menu //
+$(document).ready(function() {
+    $('.command__s4mc').click(function() {
+        var image = $(this).attr('data-image');
+        $('#findloads').attr('src', image);
+        // añadir clase active al elemento seleccionado //
+        $('.command__s4mc').removeClass('command__s4mc-active');
+        $(this).addClass('command__s4mc-active');
+    });
+});
+
 // slider de grid section6__grid //
 $(document).ready(function() {
   $('.section6__content').slick({
@@ -57,3 +68,30 @@ $(document).ready(function() {
           ]
   });
 });
+
+// slider de grid command__s5s //
+$(document).ready(function() {
+  $('.command__s5s').slick({
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      autoplay: true,
+      autoplaySpeed: 2000,
+      dots: false,
+      arrows: false,
+      infinite: true,
+  });
+});
+
+// contact form //
+$(document).ready(function() {
+    $('.contactForm').submit(function(event) {
+        event.preventDefault();
+        var form = $(this);
+        var url = form.attr('action');
+        $.ajax({
+        type: 'POST',
+        url: url,
+        data: form.serialize(),
+        });
+    });
+}

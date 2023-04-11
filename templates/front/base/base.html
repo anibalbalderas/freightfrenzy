@@ -29,10 +29,10 @@
         </div>
         <nav>
             <ul>
-                <li><a href="{{ url_for('forcarriers') }}">For Carriers</a></li>
-                <li><a href="{{ url_for('forbrokers') }}">For Brokers</a></li>
+                <li><a href="{{ url_for('command') }}">For Carriers</a></li>
+                <li><a href="{{ url_for('command') }}">For Brokers</a></li>
                 <li><a href="{{ url_for('company') }}">Company</a></li>
-                <li><a href="{{ url_for('partners') }}">Partners</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
                 <li><a href="{{ url_for('getademo') }}">Get a Demo</a></li>
             </ul>
         </nav>
@@ -51,7 +51,7 @@
         </div>
         <div class="footer__social">
             <a href="https://www.facebook.com/"><img src="{{ url_for('static', filename='img/facebook.svg') }}" alt="Facebook"></a>
-            <a href="https://www.linkedin.com/"><img src="{{ url_for('static', filename='img/linkedIn.svg') }}" alt="Linkedin"></a>
+            <a href="https://www.linkedin.com/"><img src="{{ url_for('static', filename='img/linkedin.svg') }}" alt="LinkedIn"></a>
         </div>
         <div class="footer__p">
             <p>© 2023 Freight Frenzy Inc. <a href="{{ url_for('index') }}" class="footer__a">Terms</a> & <a href="{{ url_for('index') }}" class="footer__a">Privacy Policy</a></p>
