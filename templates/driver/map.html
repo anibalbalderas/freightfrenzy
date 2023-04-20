@@ -1,0 +1,25 @@
+{% extends 'driver/base/base.html' %}
+
+{% block content %}
+    <div class="mappage">
+        <div class="map" id="map">
+
+            <div class="mapselect">
+                <div class="driversContent">
+                    <form class="drivers" method="post">
+                        <h2>Drivers</h2>
+                        <label for="driver">Select a driver
+                            <select name="driver" id="driver">
+                                <option value="0">Select a driver</option>
+                                {% for driver in drivers %}
+                                    <option value="{{ driver[0] }}">{{ driver[1] }}</option>
+                                {% endfor %}
+                            </select>
+                        </label>
+                        <button type="submit" class="mapbutton hidden">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

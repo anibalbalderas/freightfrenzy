@@ -1,0 +1,47 @@
+{% extends 'driver/base/base.html' %}
+
+{% block content %}
+    <div class="addDrivers">
+        <div class=driversFormContent>
+            <div class="listDrivers">
+
+            </div>
+            <div class="addDriversContent">
+                <h2>Add your drivers</h2>
+                <form method="post" class="driversForm" id="driversForm">
+                    <label for="name">Name</label>
+                    <input type="text" name="name" id="name" placeholder="Name" required>
+                    <label for="surname">Surname</label>
+                    <input type="text" name="surname" id="surname" placeholder="Surname" required>
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" placeholder="Email" required>
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" placeholder="Password" required>
+                    <label for="phone">Phone</label>
+                    <input type="text" name="phone" id="phone" placeholder="Phone" required>
+                    <label for="address">Address</label>
+                    <input type="text" name="address" id="address" placeholder="Address" required>
+                    <label for="city">City</label>
+                    <input type="text" name="city" id="city" placeholder="City" required>
+                    <label for="state">State</label>
+                    <input type="text" name="state" id="state" placeholder="State" required>
+                    <label for="zip">Zip</label>
+                    <input type="text" name="zip" id="zip" placeholder="Zip" required>
+                    <label for="country">Country</label>
+                    <input type="text" name="country" id="country" placeholder="Country" required>
+                    <label for="license">License</label>
+                    <input type="text" name="license" id="license" placeholder="License" required>
+                    <label for="licenseExp">License Exp</label>
+                    <input type="date" name="licenseExp" id="licenseExp" placeholder="License Exp" required>
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" name="dob" id="dob" placeholder="Date of Birth" required>
+                    <label for="ssn">SSN</label>
+                    <input type="text" name="ssn" id="ssn" placeholder="SSN" required>
+                    <label for="driverType">Driver Type</label>
+                    <input type="text" name="driverType" id="driverType" placeholder="Driver Type" required>
+                    <button type="submit" class="btn btn-primary">Add Driver</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
