@@ -2,10 +2,22 @@ import os
 import smtplib
 
 from email.message import EmailMessage
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
+from flask_socketio import SocketIO, emit
+from flask_mysqldb import MySQL
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'mysecretkey'
+
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_DB'] = 'freightfrenzy'
+app.config['MYSQL_PORT'] = 3306
+app.config["MYSQL_CUSTOM_OPTIONS"] = {"ssl": "false"}
+
+socketio = SocketIO(app)
+mysql = MySQL(app)
 
 
 @app.route('/', methods=['GET'])
@@ -32,7 +44,8 @@ def contact():
         msg['From'] = email
         msg['To'] = 'aniballeguizamobalderas@gmail.com'
         msg['Subject'] = 'Freight Frenzy'
-        msg.set_content('Nombre: ' + name + '\n' + 'Email: ' + email + '\n' + 'Teléfono: ' + phone + '\n' + 'Mensaje: ' + message)
+        msg.set_content(
+            'Nombre: ' + name + '\n' + 'Email: ' + email + '\n' + 'Teléfono: ' + phone + '\n' + 'Mensaje: ' + message)
 
         # enviar correo electrónico #
         with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
@@ -60,7 +73,8 @@ def getademo():
         msg['From'] = email
         msg['To'] = 'aniballeguizamobalderas@gmail.com'
         msg['Subject'] = 'Freight Frenzy'
-        msg.set_content('Nombre: ' + firstName + '\n' + 'Apellido: ' + lastName + '\n' + 'Email: ' + email + '\n' + 'Teléfono: ' + phone + '\n' + 'Compañía: ' + company + '\n' + 'Número de camiónes: ' + truckNumber)
+        msg.set_content(
+            'Nombre: ' + firstName + '\n' + 'Apellido: ' + lastName + '\n' + 'Email: ' + email + '\n' + 'Teléfono: ' + phone + '\n' + 'Compañía: ' + company + '\n' + 'Número de camiónes: ' + truckNumber)
 
         # enviar correo electrónico #
         with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
@@ -88,7 +102,8 @@ def getademo2():
         msg['From'] = email
         msg['To'] = 'aniballeguizamobalderas@gmail.com'
         msg['Subject'] = 'Freight Frenzy'
-        msg.set_content('Nombre: ' + firstName + '\n' + 'Apellido: ' + lastName + '\n' + 'Email: ' + email + '\n' + 'Teléfono: ' + phone + '\n' + 'Número de MC: ' + mcNumber + '\n' + 'Número de cargas: ' + loadsNumber)
+        msg.set_content(
+            'Nombre: ' + firstName + '\n' + 'Apellido: ' + lastName + '\n' + 'Email: ' + email + '\n' + 'Teléfono: ' + phone + '\n' + 'Número de MC: ' + mcNumber + '\n' + 'Número de cargas: ' + loadsNumber)
 
         # enviar correo electrónico #
         with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
@@ -107,6 +122,198 @@ def dispatch():
 @app.route('/command', methods=['GET'])
 def command():
     return render_template('front/command.html')
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        # obtener datos del formulario #
+        email = request.form['username']
+        password = request.form['password']
+
+        # verificar si el usuario existe #
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM users WHERE email=%s AND password=%s", (email, password))
+        user = cur.fetchone()
+        cur.close()
+        if user:
+            session['user'] = email
+            return redirect(url_for('driver'))
+        else:
+            return render_template('front/login.html', error='username or password incorrect')
+    return render_template('front/login.html')
+
+
+@app.route('/driver', methods=['GET'])
+def driver():
+    # verificar si el usuario está logueado #
+    if 'user' in session:
+        return render_template('driver/index.html')
+    else:
+        return redirect(url_for('login'))
+
+
+@socketio.on('location')
+def handle_location(data):
+    # obtener id del usuario de la base de datos #
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT id FROM drivers WHERE email=%s", (session['user'],))
+    user_id = cur.fetchone()
+    cur.close()
+    if user_id is None:
+        return
+    lat = data['lat']
+    lng = data['lng']
+    # guardar ubicación en la base de datos o actualizarla si ya existe #
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM locations WHERE user_id=%s", (user_id,))
+    result = cur.fetchone()
+    if result:
+        cur.execute("UPDATE locations SET latitude=%s, longitude=%s WHERE user_id=%s", (lat, lng, user_id))
+    else:
+        cur.execute("INSERT INTO locations (user_id, latitude, longitude) VALUES (%s, %s, %s)", (user_id, lat, lng))
+    mysql.connection.commit()
+    cur.close()
+    emit('location', data, broadcast=True)
+
+
+@app.route('/driver/location/<int:driver_id>', methods=['GET'])
+def driver_location(driver_id):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT latitude, longitude FROM locations WHERE user_id=%s", (driver_id,))
+    result = cur.fetchone()
+    cur.close()
+    if result:
+        return {'latitude': result[0], 'longitude': result[1]}
+    else:
+        return {'error': 'User not found'}
+
+
+@app.route('/driver/destination/<int:driver_id>', methods=['GET'])
+def driver_destination(driver_id):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT latitude, longitude FROM destinations WHERE user_id=%s", (driver_id,))
+    result = cur.fetchone()
+    cur.close()
+    if result:
+        return {'latitude': result[0], 'longitude': result[1]}
+    else:
+        return {'error': 'User not found'}
+
+
+@app.route('/driver/starts/<int:driver_id>', methods=['GET'])
+def driver_starts(driver_id):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT latitude, longitude FROM starts WHERE user_id=%s", (driver_id,))
+    result = cur.fetchone()
+    cur.close()
+    if result:
+        return {'latitude': result[0], 'longitude': result[1]}
+    else:
+        return {'error': 'User not found'}
+
+
+@app.route('/driver/map', methods=['GET', 'POST'])
+def drivermap():
+    # verificar si el usuario está logueado #
+    if 'user' in session:
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM users WHERE email=%s AND role='broker'", (session['user'],))
+        user = cur.fetchone()
+        cur.close()
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM users WHERE email=%s AND role='admin'", (session['user'],))
+        user2 = cur.fetchone()
+        cur.close()
+        if user:
+            # obtener drivers de el broker #
+            cur = mysql.connection.cursor()
+            cur.execute("SELECT id, name FROM drivers WHERE broker=%s", (session['user'],))
+            drivers = cur.fetchall()
+            cur.close()
+            if drivers:
+                return render_template('driver/map.html', drivers=drivers)
+            else:
+                return render_template('driver/index.html')
+        if user2:
+            cur = mysql.connection.cursor()
+            cur.execute("SELECT id, name FROM drivers")
+            drivers = cur.fetchall()
+            cur.close()
+            if drivers:
+                return render_template('driver/map.html', drivers=drivers)
+            else:
+                return render_template('driver/index.html')
+        else:
+            return render_template('driver/index.html')
+    else:
+        return redirect(url_for('login'))
+
+
+@app.route('/driver/drivers', methods=['GET', 'POST'])
+def driverdrivers():
+    # verificar si el usuario está logueado #
+    if 'user' in session:
+        # insertar datos del formulario #
+        if request.method == 'POST':
+            # obtener datos del formulario #
+            name = request.form['name']
+            surname = request.form['surname']
+            email = request.form['email']
+            password = request.form['password']
+            phone = request.form['phone']
+            address = request.form['address']
+            city = request.form['city']
+            state = request.form['state']
+            zip = request.form['zip']
+            country = request.form['country']
+            license = request.form['license']
+            licenceExp = request.form['licenseExp']
+            dob = request.form['dob']
+            ssn = request.form['ssn']
+            driverType = request.form['driverType']
+            # guardar datos en la base de datos #
+            # verificar si el usuario existe #
+            cur = mysql.connection.cursor()
+            cur.execute("SELECT * FROM drivers WHERE email=%s", (email,))
+            user = cur.fetchone()
+            cur.close()
+            if user:
+                return render_template('driver/drivers.html', error='User already exists')
+            else:
+                cur = mysql.connection.cursor()
+                cur.execute("INSERT INTO users (username, email, password, role) VALUES (%s, %s, %s, %s)", (name, email, password, 'driver'))
+                mysql.connection.commit()
+                cur.close()
+                # obtener id del usuario #
+                cur = mysql.connection.cursor()
+                cur.execute("SELECT id FROM users WHERE email=%s", (email,))
+                user_id = cur.fetchone()
+                cur.close()
+                # guardar datos del usuario en la tabla drivers #
+                cur = mysql.connection.cursor()
+                cur.execute("INSERT INTO drivers (id, name, surname, email, password, phone, address, city, state, zip, country, license, exp, birth, ssn, drivertype, broker) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", (user_id, name, surname, email, password, phone, address, city, state, zip, country, license, licenceExp, dob, ssn, driverType, session['user']))
+                mysql.connection.commit()
+                cur.close()
+            return redirect(url_for('driverdrivers'))
+        return render_template('driver/drivers.html')
+    else:
+        return redirect(url_for('login'))
+
+
+@app.route('/broker', methods=['GET', 'POST'])
+def broker():
+    # verificar si el usuario está logueado #
+    if 'user' in session:
+        return render_template('broker/index.html')
+    else:
+        return redirect(url_for('login'))
+
+
+@app.route('/logout')
+def logout():
+    session.pop('user', None)
+    return redirect(url_for('login'))
 
 
 # obtener puerto #
