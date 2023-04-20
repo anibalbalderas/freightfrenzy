@@ -1,0 +1,240 @@
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 0;
+    font-family: "Open Sans", Arial, sans-serif;
+    font-weight: 300;
+}
+h1{
+    font-size: 44px;
+}
+h2{
+    font-size: 24px;
+}
+p{
+    margin: 0;
+    padding: 0;
+    font-family: "Open Sans", Arial, sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    color: #606060;
+}
+.menu{
+    display: grid;
+    grid-template-columns: 100px 9fr;
+    min-height: 100vh;
+}
+.select{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: #0a8dd1;
+}
+.selected{
+    background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+.select__logo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    margin-bottom: 50px;
+    margin-top: 10px;
+}
+.select__logo img{
+    width: 80px;
+}
+.select__menu{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.select__menu a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 300;
+    margin-bottom: 25px;
+}
+.select__menu a img{
+    width: 50px;
+    margin: 0 auto;
+}
+.mappage{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+.map{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background-color: #fff;
+}
+.mapselect{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.3);
+    z-index: 1;
+}
+.driversContent{
+    width: 400px;
+    height: 400px;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 20px;
+}
+.drivers{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.drivers h2{
+    font-size: 24px;
+    color: #0a8dd1;
+    margin-bottom: 10px;
+}
+.drivers label{
+    font-size: 16px;
+    color: #5b5b5b;
+}
+.drivers select{
+    width: 200px;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    padding: 0 10px;
+    font-size: 16px;
+    color: #606060;
+}
+.drivers button{
+    width: 200px;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    background-color: #0a8dd1;
+    color: #fff;
+    font-size: 16px;
+    margin-top: 10px;
+}
+.hidden{
+    display: none;
+}
+.addDrivers{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+.addDrivers h2{
+    font-size: 24px;
+    color: #0a8dd1;
+    margin-bottom: 10px;
+}
+.driversFormContent{
+    width: 90%;
+    height: 90vh;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 20px;
+}
+.driversForm{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    height: 50%;
+    width: 100%;
+    align-items: center;
+}
+.driversForm label{
+    font-size: 16px;
+    color: #5b5b5b;
+}
+.driversForm input{
+    width: 200px;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 0 10px;
+    font-size: 16px;
+    color: #606060;
+}
+.driversForm #name{
+    width: 45%;
+    margin-right: 10px;
+}
+.driversForm #surname{
+    width: 45%;
+}
+.driversForm #email{
+    width: 45%;
+    margin-right: 10px;
+}
+.driversForm #password{
+    width: 45%;
+}
+.driversForm #phone{
+    width: 30%;
+    margin-right: 10px;
+}
+.driversForm #address{
+    width: 30%;
+    margin-right: 10px;
+}
+.driversForm #city{
+    width: 30%;
+}
+.driversForm #state{
+    width: 30%;
+    margin-right: 10px;
+}
+.driversForm #zip{
+    width: 30%;
+    margin-right: 10px;
+}
+.driversForm #country{
+    width: 30%;
+}
+.driversForm #license{
+    width: 42%;
+    margin-right: 10px;
+}
+.driversForm #licenseExp{
+    width: 20%;
+    margin-right: 10px;
+}
+.driversForm #dob{
+    width: 20%;
+}
+.driversForm #ssn{
+    width: 30%;
+    margin-right: 10px;
+}
+.driversForm #driverType{
+    width: 30%;
+}
+.driversForm button{
+    width: 40%;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    background-color: #0a8dd1;
+    color: #fff;
+    font-size: 16px;
+    margin-top: 10px;
+}
