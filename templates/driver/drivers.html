@@ -3,12 +3,74 @@
 {% block content %}
     <div class="addDrivers">
         <div class=driversFormContent>
-            <div class="listDrivers">
-
+            <div>
+                <!-- mostrar error o success -->
+                {% if error %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ error }}
+                    </div>
+                {% endif %}
+                {% if success %}
+                    <div class="alert alert-success" role="alert">
+                        {{ success }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="buttonsDrivers">
+                <a class="btn btn-primary " id="addDriver">Add Driver</a>
+                <a class="btn btn-primary" id="listDriver">List Drivers</a>
+            </div>
+            <div class="listDrivers" style="text-align: center; display: none" id="listDrivers">
+                <h2 style="margin-top: 30px; text-align: center">Drivers</h2>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for driver in drivers %}
+                        <tr>
+                            <td>{{ driver[1] }}</td>
+                            <td>{{ driver[3] }}</td>
+                            <td>{{ driver[5] }}</td>
+                            <td>
+                                <a href="/driver/edit/{{ driver[0] }}" class="btn btn-primary">Edit</a>
+                                <a href="/driver/delete/{{ driver[0] }}" class="btn btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        <div class="listDrivers" style="text-align: center; display: none" id="listDrivers2">
+                <h2 style="margin-top: 30px; text-align: center">Drivers</h2>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for driver in drivers %}
+                        <tr>
+                            <td>{{ driver[1] }}</td>
+                            <td>
+                                <a href="/driver/edit/{{ driver[0] }}" class="btn btn-primary">Edit</a>
+                                <a href="/driver/delete/{{ driver[0] }}" class="btn btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
             <div class="addDriversContent">
-                <h2>Add your drivers</h2>
-                <form method="post" class="driversForm" id="driversForm">
+                <form method="post" class="driversForm" id="driversForm" style="display: none">
+                    <h2 style="margin-top: 30px; text-align: center">Add your drivers</h2>
                     <label for="name">Name</label>
                     <input type="text" name="name" id="name" placeholder="Name" required>
                     <label for="surname">Surname</label>
@@ -39,7 +101,9 @@
                     <input type="text" name="ssn" id="ssn" placeholder="SSN" required>
                     <label for="driverType">Driver Type</label>
                     <input type="text" name="driverType" id="driverType" placeholder="Driver Type" required>
-                    <button type="submit" class="btn btn-primary">Add Driver</button>
+                    <div class="formDrivers">
+                        <button type="submit" class="btn btn-primary">Add Driver</button>
+                    </div>
                 </form>
             </div>
         </div>
