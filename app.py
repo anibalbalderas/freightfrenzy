@@ -254,13 +254,107 @@ def drivermap():
 def driverdrivers():
     # verificar si el usuario está logueado #
     if 'user' in session:
-        # insertar datos del formulario #
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM users WHERE email=%s AND role='broker'", (session['user'],))
+        broker = cur.fetchone()
+        cur.close()
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM users WHERE email=%s AND role='admin'", (session['user'],))
+        admin = cur.fetchone()
+        cur.close()
+        if broker or admin:
+            # insertar datos del formulario #
+            if request.method == 'POST':
+                # obtener datos del formulario #
+                name = request.form['name']
+                surname = request.form['surname']
+                email = request.form['email']
+                password = request.form['password']
+                phone = request.form['phone']
+                address = request.form['address']
+                city = request.form['city']
+                state = request.form['state']
+                zip = request.form['zip']
+                country = request.form['country']
+                license = request.form['license']
+                licenceExp = request.form['licenseExp']
+                dob = request.form['dob']
+                ssn = request.form['ssn']
+                driverType = request.form['driverType']
+                # guardar datos en la base de datos #
+                # verificar si el usuario existe #
+                cur = mysql.connection.cursor()
+                cur.execute("SELECT * FROM drivers WHERE email=%s", (email,))
+                user = cur.fetchone()
+                cur.close()
+                if user:
+                    return render_template('driver/drivers.html', error='User already exists')
+                else:
+                    cur = mysql.connection.cursor()
+                    cur.execute("INSERT INTO users (username, email, password, role) VALUES (%s, %s, %s, %s)",
+                                (name, email, password, 'driver'))
+                    mysql.connection.commit()
+                    cur.close()
+                    # obtener id del usuario #
+                    cur = mysql.connection.cursor()
+                    cur.execute("SELECT id FROM users WHERE email=%s", (email,))
+                    user_id = cur.fetchone()
+                    cur.close()
+                    # guardar datos del usuario en la tabla drivers #
+                    cur = mysql.connection.cursor()
+                    cur.execute(
+                        "INSERT INTO drivers (id, name, surname, email, password, phone, address, city, state, zip, country, license, exp, birth, ssn, drivertype, broker) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+                        (user_id, name, surname, email, password, phone, address, city, state, zip, country, license,
+                         licenceExp, dob, ssn, driverType, session['user']))
+                    mysql.connection.commit()
+                    cur.close()
+                    return render_template('driver/drivers.html', success='User created successfully')
+            else:
+                cur = mysql.connection.cursor()
+                cur.execute("SELECT * FROM users WHERE email=%s AND role='broker'", (session['user'],))
+                user = cur.fetchone()
+                cur.close()
+                cur = mysql.connection.cursor()
+                cur.execute("SELECT * FROM users WHERE email=%s AND role='admin'", (session['user'],))
+                user2 = cur.fetchone()
+                cur.close()
+                if user:
+                    # obtener drivers de el broker #
+                    cur = mysql.connection.cursor()
+                    cur.execute("SELECT * FROM drivers WHERE broker=%s", (session['user'],))
+                    drivers = cur.fetchall()
+                    cur.close()
+                    if drivers:
+                        return render_template('driver/drivers.html', drivers=drivers)
+                    else:
+                        return render_template('driver/index.html')
+                if user2:
+                    cur = mysql.connection.cursor()
+                    cur.execute("SELECT * FROM drivers")
+                    drivers = cur.fetchall()
+                    cur.close()
+                    if drivers:
+                        return render_template('driver/drivers.html', drivers=drivers)
+                    else:
+                        return render_template('driver/index.html')
+        else:
+            return render_template('driver/index.html')
+    else:
+        return redirect(url_for('login'))
+
+
+@app.route('/driver/edit/<int:driver_id>', methods=['POST', 'GET'])
+def driveredit(driver_id):
+    if 'user' in session:
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM drivers WHERE id=%s", (driver_id,))
+        driver = cur.fetchone()
+        cur.close()
         if request.method == 'POST':
             # obtener datos del formulario #
             name = request.form['name']
             surname = request.form['surname']
             email = request.form['email']
-            password = request.form['password']
             phone = request.form['phone']
             address = request.form['address']
             city = request.form['city']
@@ -272,42 +366,52 @@ def driverdrivers():
             dob = request.form['dob']
             ssn = request.form['ssn']
             driverType = request.form['driverType']
-            # guardar datos en la base de datos #
-            # verificar si el usuario existe #
+            # actualizar datos en la base de datos #
             cur = mysql.connection.cursor()
-            cur.execute("SELECT * FROM drivers WHERE email=%s", (email,))
-            user = cur.fetchone()
+            cur.execute("UPDATE drivers SET name=%s, surname=%s, email=%s, phone=%s, address=%s, city=%s, state=%s, zip=%s, country=%s, license=%s, exp=%s, birth=%s, ssn=%s, drivertype=%s WHERE id=%s", (name, surname, email, phone, address, city, state, zip, country, license, licenceExp, dob, ssn, driverType, driver_id))
+            mysql.connection.commit()
             cur.close()
-            if user:
-                return render_template('driver/drivers.html', error='User already exists')
-            else:
-                cur = mysql.connection.cursor()
-                cur.execute("INSERT INTO users (username, email, password, role) VALUES (%s, %s, %s, %s)", (name, email, password, 'driver'))
-                mysql.connection.commit()
-                cur.close()
-                # obtener id del usuario #
-                cur = mysql.connection.cursor()
-                cur.execute("SELECT id FROM users WHERE email=%s", (email,))
-                user_id = cur.fetchone()
-                cur.close()
-                # guardar datos del usuario en la tabla drivers #
-                cur = mysql.connection.cursor()
-                cur.execute("INSERT INTO drivers (id, name, surname, email, password, phone, address, city, state, zip, country, license, exp, birth, ssn, drivertype, broker) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", (user_id, name, surname, email, password, phone, address, city, state, zip, country, license, licenceExp, dob, ssn, driverType, session['user']))
-                mysql.connection.commit()
-                cur.close()
-            return redirect(url_for('driverdrivers'))
-        return render_template('driver/drivers.html')
-    else:
-        return redirect(url_for('login'))
+            return render_template('driver/drivers.html', success='User updated successfully')
+        return render_template('driver/edit.html', driver_id=driver_id, driver=driver)
 
 
-@app.route('/broker', methods=['GET', 'POST'])
-def broker():
-    # verificar si el usuario está logueado #
+@app.route('/driver/delete/<int:driver_id>', methods=['GET'])
+def driverdelete(driver_id):
+    print(driver_id)
+    cur = mysql.connection.cursor()
+    cur.execute("DELETE FROM drivers WHERE id=%s", (driver_id,))
+    mysql.connection.commit()
+    cur.close()
+    return render_template('driver/drivers.html', success='User deleted successfully')
+
+
+@app.route('/driver/loads', methods=['GET'])
+def driverloads():
     if 'user' in session:
-        return render_template('broker/index.html')
-    else:
-        return redirect(url_for('login'))
+        return render_template('driver/loads.html')
+
+
+@app.route('/driver/loads/add', methods=['POST', 'GET'])
+def driverloadsadd():
+    if 'user' in session:
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM users WHERE email=%s AND role='broker'", (session['user'],))
+        broker = cur.fetchone()
+        cur.close()
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM users WHERE email=%s AND role='admin'", (session['user'],))
+        admin = cur.fetchone()
+        cur.close()
+        if broker or admin:
+            return render_template('driver/loadsadd.html')
+        else:
+            return render_template('driver/index.html')
+
+
+@app.route('/driver/settings', methods=['GET'])
+def settings():
+    if 'user' in session:
+        return render_template('driver/settings.html')
 
 
 @app.route('/logout')
