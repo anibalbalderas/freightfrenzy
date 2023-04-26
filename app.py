@@ -2,7 +2,7 @@ import os
 import smtplib
 
 from email.message import EmailMessage
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, json
 from flask_socketio import SocketIO, emit
 from flask_mysqldb import MySQL
 
@@ -148,7 +148,12 @@ def login():
 def driver():
     # verificar si el usuario está logueado #
     if 'user' in session:
-        return render_template('driver/index.html')
+        # obtener mis loads #
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM loads WHERE driver=%s", (session['user'],))
+        loads = cur.fetchall()
+        cur.close()
+        return render_template('driver/index.html', loads=loads)
     else:
         return redirect(url_for('login'))
 
@@ -385,24 +390,132 @@ def driverdelete(driver_id):
     return render_template('driver/drivers.html', success='User deleted successfully')
 
 
-@app.route('/driver/loads', methods=['GET'])
+@app.route('/driver/loads', methods=['GET', 'POST'])
 def driverloads():
     if 'user' in session:
-        return render_template('driver/loads.html')
+        # obtener loads disponibles segun la fecha #
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM loads WHERE earlypickupdate >= CURDATE() AND driver IS NULL")
+        loads = cur.fetchall()
+        cur.close()
+        if loads:
+            if request.method == 'POST':
+                fromcity = request.form['from']
+                tocity = request.form['to']
+                price = request.form['price']
+                ppm = request.form['ppm']
+                if fromcity:
+                    query = "SELECT * FROM loads WHERE earlypickupdate >= CURDATE() AND fromcity=%s"
+                    parameters = (fromcity,)
+                else:
+                    query = "SELECT * FROM loads WHERE earlypickupdate >= CURDATE()"
+                    parameters = ()
+
+                if tocity:
+                    query += " AND tocity=%s"
+                    parameters += (tocity,)
+
+                if price:
+                    query += " AND price>=%s"
+                    parameters += (price,)
+
+                if ppm:
+                    query += " AND ppm>=%s"
+                    parameters += (ppm,)
+
+                cur = mysql.connection.cursor()
+                cur.execute(query, parameters)
+                loads = cur.fetchall()
+                cur.close()
+                if loads:
+                    return render_template('driver/loads.html', loads=loads)
+                else:
+                    return render_template('driver/index.html', error='No loads found')
+        return render_template('driver/loads.html', loads=loads)
+    return render_template('driver/loads.html')
+
+
+@app.route('/driver/loads/<int:load_id>')
+def driverloadsview(load_id):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT fromcity, tocity, earlypickupdate, latepickupdate, earlydropoffdate, latedropoffdate, lenght, width, height, `cube`, pieces, pallets, broker, laodnumber FROM loads WHERE laodnumber=%s", (load_id,))
+    data = cur.fetchone()
+    cur.close()
+    # pasar datos con caracteres especiales a json #
+    if data:
+        json_data = json.dumps(data, ensure_ascii=False).encode('utf8')
+        return json_data
+
+
+@app.route('/driver/loads/<int:load_id>/take', methods=['GET'])
+def driverloadstake(load_id):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM loads WHERE laodnumber=%s", (load_id,))
+    load = cur.fetchone()
+    cur.close()
+    if load:
+        cur = mysql.connection.cursor()
+        cur.execute("UPDATE loads SET driver=%s WHERE laodnumber=%s", (session['user'], load_id))
+        mysql.connection.commit()
+        cur.close()
+        return render_template('driver/index.html', success='Load taken successfully')
+    return render_template('driver/index.html', error='Load not found')
 
 
 @app.route('/driver/loads/add', methods=['POST', 'GET'])
 def driverloadsadd():
     if 'user' in session:
         cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM users WHERE email=%s AND role='broker'", (session['user'],))
-        broker = cur.fetchone()
+        cur.execute("SELECT * FROM users WHERE email=%s AND role='business'", (session['user'],))
+        business = cur.fetchone()
         cur.close()
         cur = mysql.connection.cursor()
         cur.execute("SELECT * FROM users WHERE email=%s AND role='admin'", (session['user'],))
         admin = cur.fetchone()
         cur.close()
-        if broker or admin:
+        if business or admin:
+            if request.method == 'POST':
+                # obtener datos del formulario #
+                fromcity = request.form['from']
+                earlypickupdate = request.form['EarlyPickupDate']
+                latepickupdate = request.form['LatePickupDate']
+                earlypickuptime = request.form['EarlyPickupTime']
+                latepickuptime = request.form['LatePickupTime']
+                tocity = request.form['to']
+                earlydropoffdate = request.form['EarlyDropOffDate']
+                latedropoffdate = request.form['LateDropOffDate']
+                earlydropofftime = request.form['EarlyDropOffTime']
+                latedropofftime = request.form['LateDropOffTime']
+                equipment = request.form['equipment']
+                mode = request.form['mode']
+                price = request.form['price']
+                weight = request.form['weight']
+                ppm = request.form['ppm']
+                lenght = request.form['Length']
+                width = request.form['Width']
+                height = request.form['Height']
+                cube = request.form['Cube']
+                miles = request.form['miles']
+                pieces = request.form['Pieces']
+                pallets = request.form['Pallets']
+                moreloadoptions = request.form['MoreLoadOptions']
+                otherequipmentneeds = request.form['OtherEquipmentNeeds']
+                specialinformation = request.form['SpecialInformation']
+                comodity = request.form['Commodity']
+                laodnumber = request.form['LoadNumber']
+                # verificar que no este el load number en la base de datos #
+                cur = mysql.connection.cursor()
+                cur.execute("SELECT * FROM loads WHERE laodnumber=%s", (laodnumber,))
+                load = cur.fetchone()
+                cur.close()
+                if load:
+                    return render_template('driver/index.html', error='Load number already exists')
+                else:
+                    cur = mysql.connection.cursor()
+                    cur.execute("INSERT INTO loads (fromcity, earlypickupdate, latepickupdate, earlypickuptime, latepickuptime, tocity, earlydropoffdate, latedropoffdate, earlydropofftime, latedropofftime, equipment, mode, price, weight, ppm, lenght, width, height, `cube`, miles, pieces, pallets, moreloadoptions, otherequipmentneeds, specialinformation, comodity, laodnumber, broker) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s,%s,%s,%s, %s, %s, %s, %s, %s,%s,%s,%s,%s,%s,%s,%s,%s)", (fromcity, earlypickupdate, latepickupdate, earlypickuptime, latepickuptime, tocity, earlydropoffdate, latedropoffdate, earlydropofftime, latedropofftime, equipment, mode, price, weight, ppm, lenght, width, height, cube, miles, pieces, pallets, moreloadoptions, otherequipmentneeds, specialinformation, comodity, laodnumber, session['user']))
+                    mysql.connection.commit()
+                    cur.close()
+                    return render_template('driver/index.html', success='Load created successfully')
             return render_template('driver/loadsadd.html')
         else:
             return render_template('driver/index.html')
@@ -411,7 +524,36 @@ def driverloadsadd():
 @app.route('/driver/settings', methods=['GET'])
 def settings():
     if 'user' in session:
-        return render_template('driver/settings.html')
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM users WHERE email=%s AND role='driver'", (session['user'],))
+        user = cur.fetchone()
+        cur.close()
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM users WHERE email=%s AND role='broker'", (session['user'],))
+        user2 = cur.fetchone()
+        cur.close()
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM users WHERE email=%s AND role='admin'", (session['user'],))
+        user3 = cur.fetchone()
+        cur.close()
+        if user:
+            return render_template('driver/usersettings.html')
+        if user2:
+            return render_template('driver/brokersettings.html')
+        if user3:
+            return render_template('driver/adminsettings.html', session=session['user'], user=user3)
+    else:
+        return redirect(url_for('login'))
+
+
+@app.route('/profile/<user>', methods=['GET'])
+def profile(user):
+    if 'user'in session:
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM broker WHERE broker=%s", (user,))
+        user = cur.fetchone()
+        cur.close()
+        return render_template('driver/profile.html', user=user)
 
 
 @app.route('/logout')

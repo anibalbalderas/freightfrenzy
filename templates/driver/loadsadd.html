@@ -1,5 +1,226 @@
 {% extends 'driver/base/base.html' %}
 
 {% block content %}
-
+    <div class="settings__content">
+        <div class="loads__content">
+            <div class="loads__h2">
+                <h2 style="margin-bottom: 50px; font-size: 30px">Add your load</h2>
+            </div>
+            <div class="loads__form">
+                <form method="post" class="driversForm">
+                    <div class="loads__grid">
+                        <div class="loads__gridi">
+                            <div class="origin">
+                                <h2 style="margin-bottom: 20px; font-size: 30px; color: #3d3d3d; text-align: center">Origin</h2>
+                                <label for="from">From</label>
+                                <input type="text" name="from" id="from" placeholder="From" required>
+                                <div class="loads__grid">
+                                    <div class="loads__gridi">
+                                        <label for="EarlyPickupDate">Early Pickup Date</label>
+                                        <input type="date" name="EarlyPickupDate" id="EarlyPickupDate" required>
+                                        <label for="LatePickupDate">Late Pickup Date</label>
+                                        <input type="date" name="LatePickupDate" id="LatePickupDate" required>
+                                    </div>
+                                    <div class="loads__gridd">
+                                        <label for="EarlyPickupTime">Early Pickup Time</label>
+                                        <input type="time" name="EarlyPickupTime" id="EarlyPickupTime" required>
+                                        <label for="LatePickupTime">Late Pickup Time</label>
+                                        <input type="time" name="LatePickupTime" id="LatePickupTime" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="destination">
+                                <h2 style="margin-bottom: 20px; font-size: 30px; color: #3d3d3d; text-align: center; margin-top: 20px">Destination</h2>
+                                <label for="to">To</label>
+                                <input type="text" name="to" id="to" placeholder="To" required>
+                                <div class="loads__grid">
+                                    <div class="loads__gridi">
+                                        <label for="EarlyDropOffDate">Early Drop Off Date</label>
+                                        <input type="date" name="EarlyDropOffDate" id="EarlyDropOffDate" required>
+                                        <label for="LateDropOffDate">Late Drop Off Date</label>
+                                        <input type="date" name="LateDropOffDate" id="LateDropOffDate" required>
+                                    </div>
+                                    <div class="loads__gridd">
+                                        <label for="EarlyDropOffTime">Early Drop Off Time</label>
+                                        <input type="time" name="EarlyDropOffTime" id="EarlyDropOffTime" required>
+                                        <label for="LateDropOffTime">Late Drop Off Time</label>
+                                        <input type="time" name="LateDropOffTime" id="LateDropOffTime" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="loads__gridd">
+                            <h2 style="margin-bottom: 20px; font-size: 30px; color: #3d3d3d; text-align: center">Equipment & Load Details</h2>
+                            <div class="loads__grid">
+                                <div class="loads__gridi">
+                                    <label for="equipment">Equipment</label>
+                                    <select name="equipment" id="equipment" required>
+                                        <option value="" disabled selected></option>
+                                        <option value="V">V - Van</option>
+                                        <option value="F">F - Flatbed</option>
+                                        <option value="R">R - Refrigerated (Reefer)</option>
+                                        <option value="VR">VR - Van or Reefer</option>
+                                        <option value="VFR">VRF - Flatbed, Van or Reefer</option>
+                                        <option value="2F">2F - Two 24 or 28 Foot Flatbeds</option>
+                                        <option value="ANIM">ANIM - Animal Carrier</option>
+                                        <option value="AUTO">AUTO - Auto Carrier</option>
+                                        <option value="BDMP">BDMP - Belly Dump</option>
+                                        <option value="BEAM">BEAM - Beam</option>
+                                        <option value="BELT">BELT - Conveyor Belt</option>
+                                        <option value="BOAT">BOAT - Boat Hauling Trailer</option>
+                                        <option value="B-TR">B-TR - B-Train/Supertrain (Canada only)</option>
+                                        <option value="CH">CH - Convertible Hopper</option>
+                                        <option value="CONG">CONG - Conestoga</option>
+                                        <option value="CONT">CONT - Container Trailer</option>
+                                        <option value="CV">CV - Curtain Van</option>
+                                        <option value="DA">DA - Drive Away</option>
+                                        <option value="DD">DD - Double Drop</option>
+                                        <option value="DF">DDE - Double Drop Extendable</option>
+                                        <option value="DUMP">DUMP - Dump Trucks</option>
+                                        <option value="ENDP">ENDP - End Dump</option>
+                                        <option value="FA">FA - FlatBed - Air-Ride</option>
+                                        <option value="FEXT">FEXT - Stretch Trailers or Extendable Flatbed</option>
+                                        <option value="FINT">FINT - Flatbed Intermodal</option>
+                                        <option value="FO">FO - Flatbed Over-Dimension Loads</option>
+                                        <option value="FRV">FRV - Flatbed, Van or Reefer</option>
+                                        <option value="FSD">FSD - Flatbed or Step Deck</option>
+                                        <option value="FSDV">FSDV - Flatbed, Step Deck or Van</option>
+                                        <option value="FV">FV - Van or Flatbed</option>
+                                        <option value="FVR">FVR - Flatbed, Van or Reefer</option>
+                                        <option value="FVV">FVV - Flatbed or Vented Van</option>
+                                        <option value="FVVR">FVVR - Flatbed, Vented Van or Reefer</option>
+                                        <option value="FWS">FWS - Flatbed With Sides</option>
+                                        <option value="HOPP">HOPP - Hopper Bottom</option>
+                                        <option value="HS">HS - Hot Shot</option>
+                                        <option value="HTU">HTU - Haul and Tow Unit</option>
+                                        <option value="LAF">LAF - Landoll Flatbed</option>
+                                        <option value="LB">LB - Lowboy</option>
+                                        <option value="LBO">LBO - Lowboy Over-Dimension Loads</option>
+                                        <option value="LDOT">LDOT - Load-Out are empty trailers you load and haul</option>
+                                        <option value="LIVE">LIVE - Live Bottom Trailer</option>
+                                        <option value="MAXI">MAXI - Maxi or Double Flat Trailers</option>
+                                        <option value="MBHM">MBHM - Mobile Home</option>
+                                        <option value="PNEU">PNEU - Pneumatic</option>
+                                        <option value="PO">PO - Power Only (Tow-Away)</option>
+                                        <option value="RFV">RFV - Flatbed, Van or Reefer</option>
+                                        <option value="RGN">RGN - Removable Goose Neck & Multi-Axle Heavy Haulers</option>
+                                        <option value="RGNE">RGNE - RGN Extendable</option>
+                                        <option value="RINT">RINT - Refrigerated Intermodal</option>
+                                        <option value="ROLL">ROLL - Roll Top Conestoga</option>
+                                        <option value="RPD">RPD - Refrigerated Carrier with Plant Decking</option>
+                                        <option value="RV">RV - Van or Reefer</option>
+                                        <option value="RVF">RVF - Flatbed, Van or Reefer</option>
+                                        <option value="SD">SD - Step Deck</option>
+                                        <option value="SDC">SDC - Step Deck Conestoga</option>
+                                        <option value="SDE">SDE - Step Deck Extendable</option>
+                                        <option value="SDL">SDL - Step Deck with Loading Ramps</option>
+                                        <option value="SDO">SDO - Step Deck Over-Dimension Loads</option>
+                                        <option value="SDRG">SDRG - Step Deck or Removable Gooseneck</option>
+                                        <option value="SPEC">SPEC - Unspecified Specialized Trailers</option>
+                                        <option value="SPV">SPV - Cargo/Small/Sprinter Van</option>
+                                        <option value="SV">SV - Straight Van</option>
+                                        <option value="TANK">TANK - Tanker (Food grade, liquid, bulk, etc.)</option>
+                                        <option value="VA">VA - Van - Air-Ride</option>
+                                        <option value="VB">VB - Blanket Wrap Van</option>
+                                        <option value="VCAR">VCAR - Cargo Vans (1 Ton capacity)</option>
+                                        <option value="VF">VF - Flatbed or Van</option>
+                                        <option value="VFR">VFR - Flatbed, Van or Reefer</option>
+                                        <option value="VINT">VINT - Van Intermodal</option>
+                                        <option value="VIV">VIV - Vented Insulated Van</option>
+                                        <option value="VIVR">VIVR - Vented Insulated Van or Refrigerated</option>
+                                        <option value="VLG">VLG - Van with Liftgate</option>
+                                        <option value="VM">VM - Moving Van</option>
+                                        <option value="V-OT">V-OT - Open Top Van</option>
+                                        <option value="VRDD">VRDD - Van, Reefer or Double Drop</option>
+                                        <option value="VV">VV - Vented Van</option>
+                                        <option value="VVR">VVR - Vented Van or Refrigerated</option>
+                                        <option value="WALK">WALK - Walking Floor</option>
+                                    </select>
+                                    <label for="mode">Mode</label>
+                                    <select name="mode" id="mode" required>
+                                        <option value="" disabled selected></option>
+                                        <option value="TL">TL - Truckload</option>
+                                        <option value="LTL">LTL - Less Than Truckload</option>
+                                        <option value="IM">IM - Intermodal</option>
+                                        <option value="PT">PT - Partial</option>
+                                        <option value="DY">DY- Drayage</option>
+                                        <option value="PC">PC - Parcel</option>
+                                        <option value="AI">AI - Air</option>
+                                        <option value="WT">WT - Water</option>
+                                        <option value="OC">OC - Ocean</option>
+                                    </select>
+                                </div>
+                                <div class="loads__gridd">
+                                    <label for="price">Price</label>
+                                    <input type="text" name="price" id="price" placeholder="$" required>
+                                    <label for="weight">Weight</label>
+                                    <input type="text" name="weight" id="weight" placeholder="lbs" required>
+                                </div>
+                            </div>
+                            <label for="ppm">Price per Mile</label>
+                            <input type="text" name="ppm" id="ppm" placeholder="0" readonly>
+                            <div class="loads__grid4">
+                                <div>
+                                    <label for="Length">Length</label>
+                                    <input type="text" name="Length" id="Length" placeholder="ft." required>
+                                </div>
+                                <div>
+                                    <label for="Width">Width</label>
+                                    <input type="text" name="Width" id="Width" placeholder="ft." required>
+                                </div>
+                                <div>
+                                    <label for="Height">Height</label>
+                                    <input type="text" name="Height" id="Height" placeholder="ft." required>
+                                </div>
+                                <div>
+                                    <label for="Cube">Cube</label>
+                                    <input type="text" name="Cube" id="Cube" placeholder="cu. ft." readonly>
+                                </div>
+                            </div>
+                            <div class="loads__grid3">
+                                <div>
+                                    <label for="miles">Distance</label>
+                                    <input type="text" name="miles" id="miles" placeholder="mi." readonly>
+                                </div>
+                                <div>
+                                    <label for="Pieces">Pieces</label>
+                                    <input type="text" name="Pieces" id="Pieces" placeholder="0" required>
+                                </div>
+                                <div>
+                                    <label for="Pallets">Pallets</label>
+                                    <input type="text" name="Pallets" id="Pallets" placeholder="0" required>
+                                </div>
+                            </div>
+                            <label for="MoreLoadOptions">More Load Options</label>
+                            <select name="MoreLoadOptions" id="MoreLoadOptions" required>
+                                <option value="" disabled selected></option>
+                                <option value="Tarps">Tarps</option>
+                                <option value="Hazardous">Hazardous</option>
+                                <option value="PalletExchange">Pallet Exchange</option>
+                                <option value="Team">Team</option>
+                                <option value="Expedited">Expedited</option>
+                            </select>
+                            <label for="OtherEquipmentNeeds">Other Equipment Needs</label>
+                            <input type="text" name="OtherEquipmentNeeds" id="OtherEquipmentNeeds" required>
+                            <label for="SpecialInformation">Special Information</label>
+                            <textarea name="SpecialInformation" id="SpecialInformation" cols="30" rows="10" required></textarea>
+                            <div class="loads__grid3-4">
+                                <div>
+                                    <label for="Commodity">Commodity</label>
+                                    <input type="text" name="Commodity" id="Commodity" required>
+                                </div>
+                                <div>
+                                    <label for="LoadNumber">Load Number</label>
+                                    <input type="text" name="LoadNumber" id="LoadNumber" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="buttonsDrivers">
+                        <button type="submit" style="margin-top: 50px">Add Load</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}

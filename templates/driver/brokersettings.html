@@ -1,0 +1,15 @@
+{% extends 'driver/base/base.html' %}
+
+{% block content %}
+    <div class="settings__content">
+        <div class="settings__table">
+            <div class="settings__img">
+                <img src="{{ url_for('static', filename='img/letra-f.png') }}" alt="Profile">
+            </div>
+            <div class="settings__text">
+                <p><b>Username: </b>{{ user[1] }}</p>
+                <a class="buttonSettings" href="{{ url_for('logout') }}">Log-out</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

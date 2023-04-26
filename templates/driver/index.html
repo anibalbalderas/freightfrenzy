@@ -1,6 +1,62 @@
 {% extends 'driver/base/base.html' %}
 
 {% block content %}
-<h1>INDEX</h1>
-    <a href="{{ url_for('logout') }}">Cerrar Sesion</a>
+    <div class="alerts" id="alerts">
+    {% if success %}
+        <p class="alert-success">
+            {{ success }}
+        </p>
+    {% endif %}
+    {% if error %}
+        <p class="alert-danger">
+            {{ error }}
+        </p>
+    {% endif %}
+        </div>
+    </div>
+    <div class="myloads">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="myloads-title">
+                        <h2>My Loads</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                {% if loads %}
+                    <div class="myloads-table">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Load ID</th>
+                                    <th>Origin</th>
+                                    <th>Destination</th>
+                                    <th>Trailer Type</th>
+                                    <th>Weight</th>
+                                    <th>Miles</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for load in loads %}
+                                <tr>
+                                    <td>{{ load[26] }}</td>
+                                    <td>{{ load[0] }}</td>
+                                    <td>{{ load[5] }}</td>
+                                    <td>{{ load[10] }}</td>
+                                    <td>{{ load[13] }}</td>
+                                    <td>{{ load[19] }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <p class="alert alert-info">You have no loads yet.</p>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

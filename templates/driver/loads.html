@@ -1,5 +1,105 @@
 {% extends 'driver/base/base.html' %}
 
 {% block content %}
+    <div class="containerLoads">
+        <div class="loadsp__grid">
+            <div>
+                <div>
+                    <!-- filtrar loads -->
+                    <form method="post" class="formloads" >
+                        <label for="from">From</label>
+                        <input type="text" name="from" id="from" placeholder="From" class="formDrivers__input">
+                        <label for="to">To</label>
+                        <input type="text" name="to" id="to" placeholder="To" class="formDrivers__input">
+                        <label for="price">Price</label>
+                        <input type="text" name="price" id="price" placeholder="Price" class="formDrivers__input">
+                        <label for="ppm">PPM</label>
+                        <input type="text" name="ppm" id="ppm" placeholder="PPM" class="formDrivers__input">
+                        <button type="submit" class="btn btn-primary">Filter</button>
+                    </form>
+                </div>
+                <div class="table-responsive">
+                <table class="table table-striped table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Load Number</th>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Miles</th>
+                            <th>Weight</th>
+                            <th>Usd</th>
+                            <th>PPM</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for load in loads %}
+                            <tr>
+                                <td>{{ load[26] }}</td>
+                                <td>{{ load[0] }}</td>
+                                <td>{{ load[5] }}</td>
+                                <td>{{ load[19] }}</td>
+                                <td>{{ load[13] }}</td>
+                                <td>{{ load[12] }}</td>
+                                <td>{{ load[14] }}</td>
+                                <td><a id="viewMap" class="btn btn-primary btnloads" href="/driver/loads/{{ load[26] }}">View</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            </div>
+            <div style="min-height: 85vh;">
+                <!-- mapa con ubicacion de punto a punto -->
+                <div style="width: 100%; height: 45%;">
+                    <h2 style="margin-top: 20px; margin-bottom: 20px; color: #0a8dd1">Load Map</h2>
+                    <div id="map" style="width: 100%; height: 90%">
 
+                    </div>
+                </div>
+                <div style="width: 100%; height: 45%;">
+                    <h2 style="margin-bottom: 20px; margin-top: 10px; color: #0a8dd1">Load Details</h2>
+                    <div class="load__sections">
+                        <div class="load__sections">
+                            <div id="date">
+
+                            </div>
+                            <div id="date2">
+
+                            </div>
+                        </div>
+                        <div>
+                            <div id="broker">
+
+                            </div>
+                            <div class="load__sections">
+                                <div id="pieces">
+
+                                </div>
+                                <div id="pallets">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="load__sections2">
+                        <div id="length">
+
+                        </div>
+                        <div id="width">
+
+                        </div>
+                        <div id="height">
+
+                        </div>
+                        <div id="cube">
+
+                        </div>
+                    </div>
+                    <div id="moredetails">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
