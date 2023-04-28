@@ -12,51 +12,82 @@
             {{ error }}
         </p>
     {% endif %}
-        </div>
     </div>
-    <div class="myloads">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="myloads-title">
-                        <h2>My Loads</h2>
-                    </div>
+    <div class="containerIndex">
+        <div class="indexgrid">
+            <div>
+                p
+            </div>
+            <div>
+                p
+            </div>
+            <div>
+                p
+            </div>
+      {% if loads %}
+            <div class="myloads">
+                <div class="myloads-table">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Load ID</th>
+                            <th>Origin</th>
+                            <th>Destination</th>
+                            <th>Miles</th>
+                            <th>Delete</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for load in loads %}
+                            <tr>
+                                <td>{{ load[26] }}</td>
+                                <td>{{ load[0] }}</td>
+                                <td>{{ load[5] }}</td>
+                                <td>{{ load[19] }}</td>
+                                <td>
+                                    <a href="/driver/loads/delete/{{ load[26] }}" class="btn btn-danger">Delete</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                {% if loads %}
-                    <div class="myloads-table">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Load ID</th>
-                                    <th>Origin</th>
-                                    <th>Destination</th>
-                                    <th>Trailer Type</th>
-                                    <th>Weight</th>
-                                    <th>Miles</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for load in loads %}
-                                <tr>
-                                    <td>{{ load[26] }}</td>
-                                    <td>{{ load[0] }}</td>
-                                    <td>{{ load[5] }}</td>
-                                    <td>{{ load[10] }}</td>
-                                    <td>{{ load[13] }}</td>
-                                    <td>{{ load[19] }}</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                {% else %}
-                    <p class="alert alert-info">You have no loads yet.</p>
-                {% endif %}
+        {% endif %}
+        {% if loads2 %}
+            <div class="myloads">
+                <div class="myloads-table">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Load ID</th>
+                            <th>Origin</th>
+                            <th>Destination</th>
+                            <th>Miles</th>
+                            <th>Delete</th>
+                            <th>Assign</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for load in loads2 %}
+                            <tr>
+                                <td>{{ load[26] }}</td>
+                                <td>{{ load[0] }}</td>
+                                <td>{{ load[5] }}</td>
+                                <td>{{ load[19] }}</td>
+                                <td>
+                                    <a href="/driver/loads/delete/{{ load[26] }}" class="btn btn-danger">Delete</a>
+                                </td>
+                                <td>
+                                    <a href="/driver/loads/assign/{{ load[26] }}" class="btn btn-success">Assign</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
+        {% endif %}
         </div>
     </div>
 {% endblock %}

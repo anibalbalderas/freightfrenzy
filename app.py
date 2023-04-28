@@ -149,11 +149,24 @@ def driver():
     # verificar si el usuario está logueado #
     if 'user' in session:
         # obtener mis loads #
+        # comprobar si el usuario es un conductor #
         cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM loads WHERE driver=%s", (session['user'],))
-        loads = cur.fetchall()
+        cur.execute("SELECT * FROM users WHERE role=%s AND email=%s", ('driver', session['user']))
+        user = cur.fetchone()
         cur.close()
-        return render_template('driver/index.html', loads=loads)
+        if user:
+            # obtener loads #
+            cur = mysql.connection.cursor()
+            cur.execute("SELECT * FROM loads WHERE driver=%s", (session['user'],))
+            loads = cur.fetchall()
+            cur.close()
+            return render_template('driver/index.html', loads=loads)
+        else:
+            cur = mysql.connection.cursor()
+            cur.execute("SELECT * FROM loads WHERE driver=%s", (session['user'],))
+            loads2 = cur.fetchall()
+            cur.close()
+            return render_template('driver/index.html', loads2=loads2)
     else:
         return redirect(url_for('login'))
 
@@ -447,6 +460,16 @@ def driverloadsview(load_id):
         return json_data
 
 
+@app.route('/driver/loads/delete/<int:load_id>', methods=['POST', 'GET'])
+def driverloadsdelete(load_id):
+    # borrar columna driver de la tabla loads #
+    cur = mysql.connection.cursor()
+    cur.execute("UPDATE loads SET driver=NULL WHERE laodnumber=%s", (load_id,))
+    mysql.connection.commit()
+    cur.close()
+    return render_template('driver/index.html', success='Load deleted successfully')
+
+
 @app.route('/driver/loads/<int:load_id>/take', methods=['GET'])
 def driverloadstake(load_id):
     cur = mysql.connection.cursor()
@@ -458,7 +481,27 @@ def driverloadstake(load_id):
         cur.execute("UPDATE loads SET driver=%s WHERE laodnumber=%s", (session['user'], load_id))
         mysql.connection.commit()
         cur.close()
-        return render_template('driver/index.html', success='Load taken successfully')
+        # enviar email al broker #
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM users WHERE email=%s", (load[28],))
+        broker = cur.fetchone()
+        cur.close()
+        if broker:
+            # enviar correo con Gmail #
+            msg = EmailMessage()
+            msg['From'] = 'loads@freightfrenzy.com'
+            msg['To'] = broker[2]
+            msg['Subject'] = 'Load taken'
+            msg.set_content('<body style="width: 100%; height: 100%"><div style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #3d3d3d"><div style="width: 400px; min-height: 450px; background-color: white; border-radius: 5px; padding: 10px; margin: 50px auto"><div style="text-align: center; margin-bottom: 20px"><img src="https://freightfrenzy.herokuapp.com/static/img/letra-f.png" alt="logo" style="width: 100px; height: 100px"></div><p style="color: #0a8dd1">Hi ' + broker[1] + ',</p><p>Your load has been taken by ' + session['user'] + '</p><p style="text-align:center; padding: 5px 0; background-color: #0a8dd1; color: white; margin-top: 20px">Load details</p><table><thead><tr><th style="color: #0a8dd1">From</th><th style="color: #0a8dd1">To</th><th style="color: #0a8dd1">Price</th><th style="color: #0a8dd1">PPM</th></tr></thead><tbody><tr><td style="color: #3d3d3d">' + load[0] + '</td><td style="color: #3d3d3d">' + load[5] + '</td><td style="color: #3d3d3d">' + str(load[12]) + '</td><td style="color: #3d3d3d">' + str(load[14]) + '</td></tr></tbody></table><p style="margin-top: 20px; text-align: center">Thank you for using Freight Frenzy.</p><p style="text-align:center; padding: 5px 0; background-color: #0a8dd1; color: white; margin-top: 20px">Freight Frenzy Team</p></div></div></body>', subtype='html')
+            # enviar correo electrónico #
+            with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
+                smtp.starttls()
+                smtp.login('aniballeguizamobalderas@gmail.com', 'zfevqjjzczdpfxwj')
+                smtp.send_message(msg)
+                smtp.quit()
+            return render_template('driver/index.html', success='Load taken successfully')
+        else:
+            return render_template('driver/index.html', error='Load not found')
     return render_template('driver/index.html', error='Load not found')
 
 
@@ -519,6 +562,32 @@ def driverloadsadd():
             return render_template('driver/loadsadd.html')
         else:
             return render_template('driver/index.html')
+
+
+@app.route('/driver/loads/assign/<id>', methods=['POST', 'GET'])
+def driverloadsassign(id):
+    if 'user' in session:
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM drivers WHERE broker=%s", (session['user'],))
+        driver = cur.fetchall()
+        cur.close()
+        if driver:
+            cur = mysql.connection.cursor()
+            cur.execute("SELECT * FROM loads WHERE driver=%s AND laodnumber=%s", (session['user'], id))
+            load = cur.fetchone()
+            cur.close()
+            if load:
+                if request.method == 'POST':
+                    # obtener datos del formulario #
+                    driver = request.form['driver']
+                    # actualizar el load #
+                    cur = mysql.connection.cursor()
+                    cur.execute("UPDATE loads SET driver=%s WHERE laodnumber=%s", (driver, id))
+                    mysql.connection.commit()
+                    cur.close()
+                    return render_template('driver/index.html', success='Load assigned successfully')
+            else:
+                return render_template('driver/index.html', error='Load not found')
 
 
 @app.route('/driver/settings', methods=['GET'])

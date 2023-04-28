@@ -1,0 +1,19 @@
+{% extends 'driver/base/base.html' %}
+
+{% block content %}
+    <div class="assignContent">
+        <div class="assign">
+            <h2>Assign a Driver</h2>
+            <form method="post" id="assignForm" class="assignForm">
+                {% for driver in driver %}
+                    <form method="post" class="assignForm">
+                        <select name="driver" id="driver">
+                            <option value="{{ driver[3] }}">{{ driver[1] }}</option>
+                        </select>
+                        <input type="submit" value="Assign" class="assignBtn">
+                    </form>
+                {% endfor %}
+            </form>
+        </div>
+    </div>
+{% endblock %}
