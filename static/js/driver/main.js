@@ -351,17 +351,20 @@ function cubbed() {
 }
 
 // ver ubicacion de inicio y destino en el mapa de el boton de ver detalles //
-var viewmap = document.getElementById('viewMap');
+var viewmap = document.querySelectorAll('.viewMap')
 if(viewmap) {
-    viewmap.addEventListener('click', viewMap);
+    viewmap.forEach(function (element) {
+        element.addEventListener('click', viewMap);
+    });
 }
 
-function viewMap() {
+function viewMap(event) {
     // no redireccionar //
     event.preventDefault();
-    var loadUrl = $(this).attr('href');
-    console.log(loadUrl);
-    fetch(loadUrl)
+    var loadId = event.target.getAttribute('id');
+    var loadUrl = event.target.getAttribute('href');
+    if (loadId) {
+        fetch(loadUrl)
         .then(response => response.json())
         .then(data => {
             var from = data[0];
@@ -442,6 +445,7 @@ function viewMap() {
                 }
             });
         });
+    }
 }
 
 var alert = document.getElementById('alerts');
