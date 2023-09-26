@@ -9,9 +9,9 @@ from flask_mysqldb import MySQL
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'mysecretkey'
 
-app.config['MYSQL_HOST'] = '4s5ze1.stackhero-network.com'
+app.config['MYSQL_HOST'] = '0qwri0.stackhero-network.com'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'LXUFVvi6It4xJvp4WDacPE9IauJROOkS'
+app.config['MYSQL_PASSWORD'] = 'GO8YmHJQdDSKvJfKp5QO5quGrJhK771X'
 app.config['MYSQL_DB'] = 'root'
 app.config['MYSQL_PORT'] = 3306
 app.config["MYSQL_CUSTOM_OPTIONS"] = {"ssl": "false"}
