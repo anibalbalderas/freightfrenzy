@@ -441,6 +441,20 @@ textarea{
     border-radius: 5px;
     padding: 20px;
 }
+.assign h2{
+    padding-bottom: 20px;
+}
+.assignBtn{
+    width: 40%;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    background-color: #0a8dd1;
+    color: #fff;
+    font-size: 16px;
+    margin-left: 10px;
+    margin-top: 20px;
+}
 @media (max-width: 480px){
     #listDrivers{
         display: none !important;
