@@ -395,7 +395,6 @@ def driveredit(driver_id):
 
 @app.route('/driver/delete/<int:driver_id>', methods=['GET'])
 def driverdelete(driver_id):
-    print(driver_id)
     cur = mysql.connection.cursor()
     cur.execute("DELETE FROM drivers WHERE id=%s", (driver_id,))
     mysql.connection.commit()
@@ -483,7 +482,7 @@ def driverloadstake(load_id):
         cur.close()
         # enviar email al broker #
         cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM users WHERE email=%s", (load[28],))
+        cur.execute("SELECT * FROM users WHERE email=%s", (load[29],))
         broker = cur.fetchone()
         cur.close()
         if broker:
@@ -492,11 +491,11 @@ def driverloadstake(load_id):
             msg['From'] = 'loads@freightfrenzy.com'
             msg['To'] = broker[2]
             msg['Subject'] = 'Load taken'
-            msg.set_content('<body style="width: 100%; height: 100%"><div style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #3d3d3d"><div style="width: 400px; min-height: 450px; background-color: white; border-radius: 5px; padding: 10px; margin: 50px auto"><div style="text-align: center; margin-bottom: 20px"><img src="https://freightfrenzy.herokuapp.com/static/img/letra-f.png" alt="logo" style="width: 100px; height: 100px"></div><p style="color: #0a8dd1">Hi ' + broker[1] + ',</p><p>Your load has been taken by ' + session['user'] + '</p><p style="text-align:center; padding: 5px 0; background-color: #0a8dd1; color: white; margin-top: 20px">Load details</p><table><thead><tr><th style="color: #0a8dd1">From</th><th style="color: #0a8dd1">To</th><th style="color: #0a8dd1">Price</th><th style="color: #0a8dd1">PPM</th></tr></thead><tbody><tr><td style="color: #3d3d3d">' + load[0] + '</td><td style="color: #3d3d3d">' + load[5] + '</td><td style="color: #3d3d3d">' + str(load[12]) + '</td><td style="color: #3d3d3d">' + str(load[14]) + '</td></tr></tbody></table><p style="margin-top: 20px; text-align: center">Thank you for using Freight Frenzy.</p><p style="text-align:center; padding: 5px 0; background-color: #0a8dd1; color: white; margin-top: 20px">Freight Frenzy Team</p></div></div></body>', subtype='html')
+            msg.set_content('<body style="width: 100%; height: 100%"><div style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #3d3d3d"><div style="width: 400px; min-height: 450px; background-color: white; border-radius: 5px; padding: 10px; margin: 50px auto"><div style="text-align: center; margin-bottom: 20px"><img src="https://freightfrenzy.herokuapp.com/static/img/letra-f.png" alt="logo" style="width: 100px; height: 100px"></div><p style="color: #0a8dd1">Hi ' + broker[1] + ',</p><p>Your load has been taken by ' + session['user'] + '</p><p style="text-align:center; padding: 5px 0; background-color: #0a8dd1; color: white; margin-top: 20px">Load details</p><table><thead><tr><th style="color: #0a8dd1">From</th><th style="color: #0a8dd1">To</th><th style="color: #0a8dd1">Price</th><th style="color: #0a8dd1">PPM</th></tr></thead><tbody><tr><td style="color: #3d3d3d">' + load[2] + '</td><td style="color: #3d3d3d">' + load[7] + '</td><td style="color: #3d3d3d">' + str(load[14]) + '</td><td style="color: #3d3d3d">' + str(load[16]) + '</td></tr></tbody></table><p style="margin-top: 20px; text-align: center">Thank you for using Freight Frenzy.</p><p style="text-align:center; padding: 5px 0; background-color: #0a8dd1; color: white; margin-top: 20px">Freight Frenzy Team</p></div></div></body>', subtype='html')
             # enviar correo electrónico #
             with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
                 smtp.starttls()
-                smtp.login('aniballeguizamobalderas@gmail.com', 'zfevqjjzczdpfxwj')
+                smtp.login('aniballeguizamobalderas@gmail.com', 'pxme lgou qchz tpxz')
                 smtp.send_message(msg)
                 smtp.quit()
             return render_template('driver/index.html', success='Load taken successfully')
@@ -564,14 +563,15 @@ def driverloadsadd():
             return render_template('driver/index.html')
 
 
-@app.route('/driver/loads/assign/<id>', methods=['POST', 'GET'])
+@app.route('/driver/loads/assign/<int:id>', methods=['POST', 'GET'])
 def driverloadsassign(id):
     if 'user' in session:
+        # obtener drivers de el broker #
         cur = mysql.connection.cursor()
         cur.execute("SELECT * FROM drivers WHERE broker=%s", (session['user'],))
-        driver = cur.fetchall()
+        drivers = cur.fetchall()
         cur.close()
-        if driver:
+        if drivers:
             cur = mysql.connection.cursor()
             cur.execute("SELECT * FROM loads WHERE driver=%s AND laodnumber=%s", (session['user'], id))
             load = cur.fetchone()
@@ -579,15 +579,16 @@ def driverloadsassign(id):
             if load:
                 if request.method == 'POST':
                     # obtener datos del formulario #
-                    driver = request.form['driver']
+                    driver2 = request.form['driver']
                     # actualizar el load #
                     cur = mysql.connection.cursor()
-                    cur.execute("UPDATE loads SET driver=%s WHERE laodnumber=%s", (driver, id))
+                    cur.execute("UPDATE loads SET driver=%s WHERE laodnumber=%s", (driver2, id))
                     mysql.connection.commit()
                     cur.close()
                     return render_template('driver/index.html', success='Load assigned successfully')
             else:
                 return render_template('driver/index.html', error='Load not found')
+        return render_template('driver/assign.html', drivers=drivers)
 
 
 @app.route('/driver/settings', methods=['GET'])

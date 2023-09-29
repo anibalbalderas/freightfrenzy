@@ -16,13 +16,13 @@
     <div class="containerIndex">
         <div class="indexgrid">
             <div>
-
+a
             </div>
             <div>
-
+b
             </div>
             <div>
-
+c
             </div>
       {% if loads %}
             <div class="myloads">
@@ -40,12 +40,12 @@
                         <tbody>
                         {% for load in loads %}
                             <tr>
-                                <td>{{ load[26] }}</td>
-                                <td>{{ load[0] }}</td>
-                                <td>{{ load[5] }}</td>
-                                <td>{{ load[19] }}</td>
+                                <td>{{ load[28] }}</td>
+                                <td>{{ load[2] }}</td>
+                                <td>{{ load[7] }}</td>
+                                <td>{{ load[21] }}</td>
                                 <td>
-                                    <a href="/driver/loads/delete/{{ load[26] }}" class="btn btn-danger">Delete</a>
+                                    <a href="/driver/loads/delete/{{ load[28] }}" class="btn btn-danger">Delete</a>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -71,15 +71,15 @@
                         <tbody>
                         {% for load in loads2 %}
                             <tr>
-                                <td>{{ load[26] }}</td>
-                                <td>{{ load[0] }}</td>
-                                <td>{{ load[5] }}</td>
-                                <td>{{ load[19] }}</td>
+                                <td>{{ load[28] }}</td>
+                                <td>{{ load[2] }}</td>
+                                <td>{{ load[7] }}</td>
+                                <td>{{ load[21] }}</td>
                                 <td>
-                                    <a href="/driver/loads/delete/{{ load[26] }}" class="btn btn-danger">Delete</a>
+                                    <a href="/driver/loads/delete/{{ load[28] }}" class="btn btn-danger">Delete</a>
                                 </td>
                                 <td>
-                                    <a href="/driver/loads/assign/{{ load[26] }}" class="btn btn-success">Assign</a>
+                                    <a href="/driver/loads/assign/{{ load[28] }}" class="btn btn-success">Assign</a>
                                 </td>
                             </tr>
                         {% endfor %}

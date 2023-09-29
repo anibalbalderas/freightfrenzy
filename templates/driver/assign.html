@@ -3,17 +3,17 @@
 {% block content %}
     <div class="assignContent">
         <div class="assign">
+        <div class="formDrivers">
             <h2>Assign a Driver</h2>
-            <form method="post" id="assignForm" class="assignForm">
-                {% for driver in driver %}
-                    <form method="post" class="assignForm">
-                        <select name="driver" id="driver">
-                            <option value="{{ driver[3] }}">{{ driver[1] }}</option>
-                        </select>
-                        <input type="submit" value="Assign" class="assignBtn">
-                    </form>
-                {% endfor %}
+            <form method="post" class="assignForm">
+                <select name="driver" id="driver">
+                    {% for driver in drivers %}
+                        <option value="{{ driver[3] }}">{{ driver[1] }}</option>
+                    {% endfor %}
+                </select>
+                <input type="submit" value="Assign" class="assignBtn">
             </form>
+        </div>
         </div>
     </div>
 {% endblock %}
